@@ -41,7 +41,7 @@ SKIP: {
 
     is($lh_en->maketext('Hello World!'), 'Hello World!', 'DBI - simple case for en');
     is($lh_de->maketext('Hello World!'), 'Hallo Welt!',  'DBI - simple case for de');
-    
+
     is($lh_en->maketext('This is a [_1].', 'test'), 'This is a test.',    'DBI - interpolation for en');
     is($lh_de->maketext('This is a [_1].', 'test'), 'Dies ist ein test.', 'DBI - interpolation for de');
 

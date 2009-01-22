@@ -11,6 +11,7 @@ my $builder = Module::Build->new(
                   'Locale::Maketext::Lexicon' => 0,
                   'DBI'                       => 0,
                   'Test::More'                => 0,
+                  'version'                   => 0,
                 },
     add_to_cleanup     => ['Locale-Maketext-Lexicon-DBI-*'],
     create_makefile_pl => 'traditional',

@@ -3,7 +3,7 @@ package Locale::Maketext::Lexicon::DBI;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv("0.1.0");
+use version; our $VERSION = qv("0.1.1");
 
 sub parse {
     my ($class, %param) = @_;

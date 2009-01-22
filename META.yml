@@ -1,6 +1,6 @@
 ---
 name: Locale-Maketext-Lexicon-DBI
-version: 0.1.0
+version: 0.1.1
 author:
   - 'Matthias Dietrich <perl@rainboxx.de>'
 abstract: Database based lexicon fetcher/parser
@@ -11,10 +11,11 @@ requires:
   DBI: 0
   Locale::Maketext::Lexicon: 0
   Test::More: 0
+  version: 0
 provides:
   Locale::Maketext::Lexicon::DBI:
     file: lib/Locale/Maketext/Lexicon/DBI.pm
-    version: 0.1.0
+    version: 0.1.1
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

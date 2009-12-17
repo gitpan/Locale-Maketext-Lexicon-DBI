@@ -3,15 +3,15 @@ package Locale::Maketext::Lexicon::DBI;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv("0.1.1");
+use version; our $VERSION = qv("0.2.0");
 
 sub parse {
     my ($class, %param) = @_;
 
     my $dbh = $param{dbh};
-    my $sth = $dbh->prepare("SELECT key, value FROM lexicon WHERE lex = ? AND lang = ?");
+    my $sth = $dbh->prepare("SELECT lex_key, lex_value FROM lexicon WHERE lex = ? AND lang = ?");
 
-    $sth->execute($param{lex}, $param{lang});
+    $sth->execute($param{lex}, $param{lang}) || die "";
 
     my %lexicon;
     while (my ($key, $value) = $sth->fetchrow) {
@@ -83,16 +83,24 @@ This is a example table definition for PostgreSQL:
       id serial NOT NULL,
       lang character varying(15) DEFAULT NULL::character varying,
       lex character varying(255) DEFAULT NULL::character varying,
-      "key" text,
-      "value" text,
+      lex_key text,
+      lex_value text,
       notes text,
       CONSTRAINT lexicon_pkey PRIMARY KEY (id)
     ) WITH (OIDS=FALSE);
 
 You should easily adapt this to MySQL and other database systems.  Note that the
-columns C<lang>, C<lex>, C<key> and C<value> are essential!  Every other column
+columns C<lang>, C<lex>, C<lex_key> and C<lex_value> are essential!  Every other column
 can be defined by the user.  C<notes> is an optional column that can be a hint
 for the translator.
+
+=head1 INCOMPATIBILITY CHANGE IN v0.2.0
+
+B<IMPORTANT!>  Read this if you are updating from a version prior to v0.2.0!
+
+Version 0.2.0 fixes an issue when not using PostgreSQL as RDBMS, since C<key> and C<value>
+may be reserved words.  You need to alter the table C<lexicon> as described
+above in L</DB TABLE DEFINITION>: change C<key> to C<lex_key> and C<value> to C<lex_value>.
 
 =head1 SEE ALSO
 
@@ -100,11 +108,15 @@ L<Locale::Maketext>, L<Locale::Maketext::Lexicon>, L<DBI>
 
 =head1 AUTHOR
 
-Matthias Dietrich, C<< <perl@rainboxx.de> >>
+Matthias Dietrich, C<< <perl@rainboxx.de> >>, http://www.rainboxx.de
+
+=head1 THANKS TO
+
+Octavian Râşniţă for Bugfixes
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 rainboxx Matthias Dietrich.  All Rights Reserved.
+Copyright 2008 - 2009 rainboxx Matthias Dietrich.  All Rights Reserved.
 
 This program is free software, you can redistribute it and/or modify it under
 the same terms as Perl itself.

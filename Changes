@@ -1,5 +1,8 @@
 Revision history for Locale-Maketext-Lexicon-DBI
 
+0.2.0   12-17-2009/12:20pm
+        Fixed: *INCOMPATIBILITY CHANGE* Issue when using RDBMS different than PostgreSQL
+
 0.1.1   01-22-2009/11:20pm
         Fix: Added version.pm to required modules
 

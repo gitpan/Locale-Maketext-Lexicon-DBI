@@ -3,7 +3,7 @@ package Locale::Maketext::Lexicon::DBI;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv("0.2.0");
+use version; our $VERSION = qv("0.2.1");
 
 sub parse {
     my ($class, %param) = @_;
@@ -11,7 +11,10 @@ sub parse {
     my $dbh = $param{dbh};
     my $sth = $dbh->prepare("SELECT lex_key, lex_value FROM lexicon WHERE lex = ? AND lang = ?");
 
-    $sth->execute($param{lex}, $param{lang}) || die "";
+    $sth->execute($param{lex}, $param{lang})
+      or warn "Error while fetching the lexicon.  You may missed the incompatibility change in v0.2.0, see\n"
+      . "  perldoc Locale::Maketext::Lexicon::DBI\nThe error was: "
+      . $sth->errstr;
 
     my %lexicon;
     while (my ($key, $value) = $sth->fetchrow) {
